@@ -1,6 +1,5 @@
 from conans import ConanFile, CMake, tools
 
-
 class PodofoConan(ConanFile):
     name = "PoDoFo"
     version = "0.9.6"
@@ -14,15 +13,15 @@ class PodofoConan(ConanFile):
     default_options = "shared=False"
     generators = "cmake"
 
-    def source(self):
-        url = "http://sourceforge.net/projects/podofo/files/podofo/{version}/podofo-{version}.tar.gz"
-        tools.get(url.format(version=self.version))
-        
     def requirements(self):
         self.requires("libjpeg-turbo/1.5.2@bincrafters/stable")
         self.requires("libtiff/4.0.9@bincrafters/stable")
         self.requires("fontconfig/2.13.91@conan/stable")
+        self.requires("OpenSSL/1.1.1d@conan/stable")
 
+    def source(self):
+        url = "http://sourceforge.net/projects/podofo/files/podofo/{version}/podofo-{version}.tar.gz"
+        tools.get(url.format(version=self.version))
                     
     def build(self):
         folder_name = "podofo-%s" % self.version
@@ -46,5 +45,3 @@ conan_basic_setup()
 
     def package_info(self):
         self.cpp_info.libs = ["podofo"]
-
-
